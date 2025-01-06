@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Factorial Calculator</title>
+    <style>
+        /* Embedded CSS */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f4f4f4;
+            color: #333;
+        }
+
+        header {
+            text-align: center;
+            padding: 20px;
+            background: #007BFF;
+            color: white;
+        }
+
+        main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 70vh;
+        }
+
+        .calculator {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            text-align: center;
+            width: 90%;
+        }
+
+        input {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            background: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 0.9rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background: #007BFF;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Factorial Calculator</h1>
+        <p>Calculate the factorial of a number using iterative or recursive methods.</p>
+    </header>
+
+    <main>
+        <section class="calculator">
+            <input type="text" id="numberInput" placeholder="Enter a positive integer">
+            <p id="errorMessage" class="error-message"></p>
+            <div class="buttons">
+                <button id="iterativeBtn">Calculate Iteratively</button>
+                <button id="recursiveBtn">Calculate Recursively</button>
+            </div>
+            <div class="output">
+                <p id="result"></p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Factorial Calculator</p>
+    </footer>
+
+    <script>
+        // Embedded JavaScript
+        function factorialIterative(num) {
+            let result = 1;
+            for (let i = 1; i <= num; i++) {
+                result *= i;
+            }
+            return result;
+        }
+
+        function factorialRecursive(num) {
+            if (num === 0 || num === 1) return 1;
+            return num * factorialRecursive(num - 1);
+        }
+
+        function validateInput(input) {
+            const number = parseInt(input, 10);
+            if (isNaN(number) || number < 0) {
+                return { isValid: false, message: "Please enter a valid positive integer." };
+            }
+            return { isValid: true, value: number };
+        }
+
+        document.getElementById("iterativeBtn").addEventListener("click", () => {
+            const input = document.getElementById("numberInput").value;
+            const validation = validateInput(input);
+
+            if (!validation.isValid) {
+                document.getElementById("errorMessage").textContent = validation.message;
+                document.getElementById("result").textContent = "";
+                return;
+            }
+
+            document.getElementById("errorMessage").textContent = "";
+            const result = factorialIterative(validation.value);
+            document.getElementById("result").textContent = `Factorial (Iterative): ${result}`;
+        });
+
+        document.getElementById("recursiveBtn").addEventListener("click", () => {
+            const input = document.getElementById("numberInput").value;
+            const validation = validateInput(input);
+
+            if (!validation.isValid) {
+                document.getElementById("errorMessage").textContent = validation.message;
+                document.getElementById("result").textContent = "";
+                return;
+            }
+
+            document.getElementById("errorMessage").textContent = "";
+            const result = factorialRecursive(validation.value);
+            document.getElementById("result").textContent = `Factorial (Recursive): ${result}`;
+        });
+    </script>
+</body>
+</html>
